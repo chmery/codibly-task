@@ -11,3 +11,7 @@
 body {
     background: #1a1a1a;
 }
+
+:root {
+    --gray: #777777;
+}
