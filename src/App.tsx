@@ -26,6 +26,27 @@ const TEST_DATA = [
         color: "#BF1932",
         pantone: "19-1664",
     },
+    {
+        id: 4,
+        name: "true red",
+        year: 2002,
+        color: "#BF1932",
+        pantone: "19-1664",
+    },
+    {
+        id: 5,
+        name: "true red",
+        year: 2005,
+        color: "#C74375",
+        pantone: "19-1664",
+    },
+    {
+        id: 6,
+        name: "true red",
+        year: 2002,
+        color: "#BF1932",
+        pantone: "19-1664",
+    },
 ];
 
 const App = () => {
