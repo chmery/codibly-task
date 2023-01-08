@@ -1,5 +1,5 @@
 import styles from "./Pagination.module.css";
-import Button from "../Button/Button";
+import Button from "../UI/Button/Button";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
