@@ -1,17 +1,14 @@
 import styles from "./Button.module.css";
-import { MdNavigateNext } from "react-icons/md";
-import { IconType } from "react-icons/lib/esm/iconBase";
 
 type Props = {
-    text: string;
     onClick: () => void;
-    icon: IconType;
+    children: React.ReactNode;
 };
 
-const Button = ({ text, onClick, icon }: Props) => {
+const Button = ({ onClick, children }: Props) => {
     return (
-        <button className={styles.button}>
-            Next Page <MdNavigateNext />
+        <button className={styles.button} onClick={onClick}>
+            {children}
         </button>
     );
 };

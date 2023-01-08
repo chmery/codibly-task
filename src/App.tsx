@@ -1,7 +1,7 @@
 import styles from "./App.module.css";
-import Button from "./components/Button/Button";
 import Input from "./components/Input/Input";
 import List from "./components/List/List";
+import Pagination from "./components/Pagination/Pagination";
 import Wrapper from "./components/Wrapper/Wrapper";
 
 const TEST_DATA = [
@@ -33,6 +33,7 @@ const App = () => {
         <Wrapper>
             <Input />
             <List itemsData={TEST_DATA} />
+            <Pagination />
         </Wrapper>
     );
 };
