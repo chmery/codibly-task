@@ -1,0 +1,21 @@
+.button {
+    background: none;
+    border: 1px solid var(--gray);
+    color: var(--gray);
+    padding: 1em 2em;
+    cursor: pointer;
+    outline: none;
+    transition: color 0.1s, border 0.1s;
+    display: flex;
+    align-items: center;
+}
+
+.button svg {
+    font-size: 1.25rem;
+    margin-left: 0.25em;
+}
+
+.button:hover {
+    border: 1px solid #fff;
+    color: #fff;
+}

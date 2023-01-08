@@ -1,4 +1,5 @@
 import styles from "./App.module.css";
+import Button from "./components/Button/Button";
 import Input from "./components/Input/Input";
 import List from "./components/List/List";
 import Wrapper from "./components/Wrapper/Wrapper";
