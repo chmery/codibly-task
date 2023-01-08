@@ -5,10 +5,10 @@ type Props = {
 };
 
 const ListItem = ({ itemData }: Props) => {
-    const { id, name, year } = itemData;
+    const { id, name, year, color } = itemData;
 
     return (
-        <div className={styles.item}>
+        <div style={{ background: color }} className={styles["list-item"]}>
             <div>
                 ID: <span>{id}</span>
             </div>
