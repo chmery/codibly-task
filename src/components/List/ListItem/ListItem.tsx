@@ -1,11 +1,11 @@
 import styles from "./ListItem.module.css";
 
 type Props = {
-    itemData: ItemData;
+    productData: ProductData;
 };
 
-const ListItem = ({ itemData }: Props) => {
-    const { id, name, year, color } = itemData;
+const ListItem = ({ productData }: Props) => {
+    const { id, name, year, color } = productData;
 
     return (
         <div style={{ background: color }} className={styles["list-item"]}>

@@ -1,11 +1,11 @@
 declare module "*.module.css";
 
-type ItemData = {
+type ProductData = {
     id: number;
     name: string;
     year: number;
     color: string;
-    pantone: string;
+    pantoneValue: string;
 };
 
 interface ProductsData {
@@ -13,13 +13,7 @@ interface ProductsData {
     perPage: number;
     total: number;
     totalPages: number;
-    data: {
-        id: number;
-        name: string;
-        year: number;
-        color: string;
-        pantoneValue: string;
-    }[];
+    data: ProductData[];
 }
 
 interface ProductsDataResponse {

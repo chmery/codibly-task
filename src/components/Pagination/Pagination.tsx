@@ -6,17 +6,19 @@ import { useSelector } from "react-redux/es/exports";
 import { RootState } from "../../store/store";
 import { nextPage, prevPage } from "../../store/paginationSlice/paginationSlice";
 
-const Pagination = () => {
+type Props = {
+    totalPages: number;
+};
+
+const Pagination = ({ totalPages }: Props) => {
     const dispatch = useDispatch();
     const currentPage = useSelector((state: RootState) => state.pagination.currentPage);
 
     const prevPageHandler = () => dispatch(prevPage());
     const nextPageHandler = () => dispatch(nextPage());
 
-    // number 3 is to be replaced by api response
-
-    const canNextBtnBeShown = currentPage >= 1 && currentPage < 3;
-    const canPrevBtnBeShown = currentPage >= 2 && currentPage <= 3;
+    const canNextBtnBeShown = currentPage >= 1 && currentPage < totalPages;
+    const canPrevBtnBeShown = currentPage >= 2 && currentPage <= totalPages;
 
     return (
         <div className={styles.pagination}>

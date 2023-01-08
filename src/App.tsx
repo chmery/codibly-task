@@ -3,58 +3,16 @@ import Input from "./components/Input/Input";
 import List from "./components/List/List";
 import Pagination from "./components/Pagination/Pagination";
 import Wrapper from "./components/Wrapper/Wrapper";
-
-const TEST_DATA = [
-    {
-        id: 1,
-        name: "cerulean",
-        year: 2000,
-        color: "#98B2D1",
-        pantone: "15-4020",
-    },
-    {
-        id: 2,
-        name: "fuchsia rose",
-        year: 2001,
-        color: "#C74375",
-        pantone: "17-2031",
-    },
-    {
-        id: 3,
-        name: "true red",
-        year: 2002,
-        color: "#BF1932",
-        pantone: "19-1664",
-    },
-    {
-        id: 4,
-        name: "true red",
-        year: 2002,
-        color: "#BF1932",
-        pantone: "19-1664",
-    },
-    {
-        id: 5,
-        name: "true red",
-        year: 2005,
-        color: "#C74375",
-        pantone: "19-1664",
-    },
-    {
-        id: 6,
-        name: "true red",
-        year: 2002,
-        color: "#BF1932",
-        pantone: "19-1664",
-    },
-];
+import useFetchProductsData from "./hooks/useFetchProductsData";
 
 const App = () => {
+    const productsData = useFetchProductsData();
+
     return (
         <Wrapper>
             <Input />
-            <List itemsData={TEST_DATA} />
-            <Pagination />
+            {productsData && <List productsData={productsData.data} />}
+            {productsData && <Pagination totalPages={productsData.totalPages} />}
         </Wrapper>
     );
 };
