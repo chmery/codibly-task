@@ -8,15 +8,15 @@ type ProductData = {
     pantoneValue: string;
 };
 
-interface ProductsData {
+type ProductsData = {
     page: number;
     perPage: number;
     total: number;
     totalPages: number;
     data: ProductData[];
-}
+};
 
-interface ProductsDataResponse {
+type ProductsDataResponse = {
     page: number;
     per_page: number;
     total: number;
@@ -28,4 +28,14 @@ interface ProductsDataResponse {
         color: string;
         pantone_value: string;
     }[];
-}
+};
+
+type ProductDataResponse = {
+    data: {
+        id: number;
+        name: string;
+        year: number;
+        color: string;
+        pantone_value: string;
+    };
+};

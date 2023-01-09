@@ -9,7 +9,7 @@ const List = ({ productsData }: Props) => {
     return (
         <div className={styles.list}>
             {productsData.map((productData) => (
-                <ListItem productData={productData} />
+                <ListItem productData={productData} key={productData.id} />
             ))}
         </div>
     );
