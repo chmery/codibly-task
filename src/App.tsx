@@ -9,25 +9,57 @@ import { RootState } from "./store/store";
 import { useEffect, useState } from "react";
 import { fetchProductsData } from "./helpers/fetchProductsData";
 import { fetchProductData } from "./helpers/fetchProductData";
-import { resetPage } from "./store/paginationSlice/paginationSlice";
+import { setPage } from "./store/paginationSlice/paginationSlice";
 import DataModal from "./components/UI/DataModal/DataModal";
 import ErrorModal from "./components/UI/ErrorModal/ErrorModal";
 import { openErrorModal } from "./store/modalSlice/modalSlice";
+import { useSearchParams, useLocation } from "react-router-dom";
 
 const App = () => {
+    const dispatch = useDispatch();
+    const location = useLocation();
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [productData, setProductData] = useState<ProductData | null>(null);
     const [productsData, setProductsData] = useState<ProductsData | null>(null);
     const [enteredId, setEnteredId] = useState("");
 
-    const searchHandler = (enteredId: string) => setEnteredId(enteredId);
+    const searchHandler = (enteredId: string) => {
+        setEnteredId(enteredId);
+        if (!enteredId) return;
+        setSearchParams({ id: enteredId });
+    };
 
     const currentPage = useSelector((state: RootState) => state.pagination.currentPage);
     const isDataModalOpen = useSelector((state: RootState) => state.modal.dataModal.isOpen);
     const isErrorModalOpen = useSelector((state: RootState) => state.modal.errorModal.isOpen);
-    const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const query = location.search;
+        if (query === "?p=1") return; // First page
+
+        const currentPage = searchParams.get("p");
+        const enteredId = searchParams.get("id");
+
+        if (enteredId) {
+            setEnteredId(enteredId);
+            return;
+        }
+
+        if (currentPage) {
+            dispatch(setPage(Number(currentPage)));
+            return;
+        }
+    }, []);
+
+    useEffect(() => {
+        if (location.search.startsWith("?id=")) return;
+        setSearchParams({ p: currentPage.toString() });
+    }, [currentPage]);
+
+    useEffect(() => {
+        const setData = async () => {
             if (enteredId) {
                 const productData = await fetchProductData(enteredId);
                 if (productData instanceof Error) {
@@ -56,7 +88,8 @@ const App = () => {
             // After using search button and then search again but with an empty input return to the first page
             if (!enteredId && productData) {
                 const productsData = await fetchProductsData(1);
-                dispatch(resetPage());
+                dispatch(setPage(1));
+                setSearchParams({ p: currentPage.toString() });
                 if (productsData instanceof Error) {
                     dispatch(openErrorModal(productsData.message));
                     return;
@@ -69,7 +102,7 @@ const App = () => {
             }
         };
 
-        fetchData();
+        setData();
     }, [currentPage, enteredId]);
 
     const isDataAvailiable = productsData || productData ? true : false;
