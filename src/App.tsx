@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { fetchProductsData } from "./helpers/fetchProductsData";
 import { fetchProductData } from "./helpers/fetchProductData";
 import { resetPage } from "./store/paginationSlice/paginationSlice";
+import DataModal from "./components/UI/DataModal/DataModal";
 
 const App = () => {
     const [productData, setProductData] = useState<ProductData | null>(null);
@@ -19,6 +20,7 @@ const App = () => {
     const searchHandler = (enteredId: string) => setEnteredId(enteredId);
 
     const currentPage = useSelector((state: RootState) => state.pagination.currentPage);
+    const isDataModalOpen = useSelector((state: RootState) => state.modal.isOpen);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -53,6 +55,7 @@ const App = () => {
         <Wrapper>
             <div className={styles.app}>
                 {!isDataAvailiable && <Loader />}
+                {isDataModalOpen && <DataModal />}
                 {isDataAvailiable && <SearchBar onSearch={searchHandler} />}
                 {productsData && <List productsData={productsData.data} />}
                 {productData && <List productsData={[productData]} />}
