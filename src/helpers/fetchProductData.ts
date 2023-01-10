@@ -1,16 +1,27 @@
+import { checkResStatus } from "./checkResStatus";
+
 export const fetchProductData = async (enteredId: string) => {
-    const res = await fetch(`https://reqres.in/api/products/${enteredId}`);
-    const data: ProductDataResponse = await res.json();
+    try {
+        const res = await fetch(`https://reqres.in/api/products/${enteredId}`);
 
-    const { id, name, year, color, pantone_value } = data.data;
+        checkResStatus(res);
 
-    const formattedProductData = {
-        id,
-        name,
-        year,
-        color,
-        pantoneValue: pantone_value,
-    };
+        const data: ProductDataResponse = await res.json();
 
-    return formattedProductData;
+        const { id, name, year, color, pantone_value } = data.data;
+
+        const formattedProductData = {
+            id,
+            name,
+            year,
+            color,
+            pantoneValue: pantone_value,
+        };
+
+        return formattedProductData;
+    } catch (error) {
+        if (error instanceof Error) {
+            return error;
+        }
+    }
 };

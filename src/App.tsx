@@ -12,6 +12,7 @@ import { fetchProductData } from "./helpers/fetchProductData";
 import { resetPage } from "./store/paginationSlice/paginationSlice";
 import DataModal from "./components/UI/DataModal/DataModal";
 import ErrorModal from "./components/UI/ErrorModal/ErrorModal";
+import { openErrorModal } from "./store/modalSlice/modalSlice";
 
 const App = () => {
     const [productData, setProductData] = useState<ProductData | null>(null);
@@ -29,22 +30,42 @@ const App = () => {
         const fetchData = async () => {
             if (enteredId) {
                 const productData = await fetchProductData(enteredId);
-                setProductsData(null);
-                setProductData(productData);
+                if (productData instanceof Error) {
+                    dispatch(openErrorModal(productData.message));
+                    return;
+                }
+                if (productData) {
+                    setProductsData(null);
+                    setProductData(productData);
+                }
             }
 
             if (!enteredId) {
                 const productsData = await fetchProductsData(currentPage);
-                setProductData(null);
-                setProductsData(productsData);
+                if (productsData instanceof Error) {
+                    dispatch(openErrorModal(productsData.message));
+                    return;
+                }
+
+                if (productsData) {
+                    setProductData(null);
+                    setProductsData(productsData);
+                }
             }
 
             // After using search button and then search again but with an empty input return to the first page
             if (!enteredId && productData) {
                 const productsData = await fetchProductsData(1);
                 dispatch(resetPage());
-                setProductData(null);
-                setProductsData(productsData);
+                if (productsData instanceof Error) {
+                    dispatch(openErrorModal(productsData.message));
+                    return;
+                }
+
+                if (productsData) {
+                    setProductData(null);
+                    setProductsData(productsData);
+                }
             }
         };
 
