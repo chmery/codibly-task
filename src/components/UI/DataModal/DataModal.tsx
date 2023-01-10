@@ -3,15 +3,15 @@ import styles from "./DataModal.module.css";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { closeModal } from "../../../store/modalSlice/modalSlice";
+import { closeDataModal } from "../../../store/modalSlice/modalSlice";
 
 const DataModal = () => {
-    const { isOpen, productData } = useSelector((state: RootState) => state.modal);
+    const { isOpen, productData } = useSelector((state: RootState) => state.modal.dataModal);
     const { id, name, year, color, pantoneValue } = productData!;
 
     const dispatch = useDispatch();
 
-    const closeModalHandler = () => dispatch(closeModal());
+    const closeModalHandler = () => dispatch(closeDataModal());
 
     return (
         <Modal open={isOpen} onClose={closeModalHandler}>

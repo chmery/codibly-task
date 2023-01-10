@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { openModal } from "../../../store/modalSlice/modalSlice";
+import { openDataModal } from "../../../store/modalSlice/modalSlice";
 import styles from "./ListItem.module.css";
 
 type Props = {
@@ -10,7 +10,7 @@ const ListItem = ({ productData }: Props) => {
     const { id, name, year, color } = productData;
     const dispatch = useDispatch();
 
-    const openDataModalHandler = () => dispatch(openModal(productData));
+    const openDataModalHandler = () => dispatch(openDataModal(productData));
 
     return (
         <div

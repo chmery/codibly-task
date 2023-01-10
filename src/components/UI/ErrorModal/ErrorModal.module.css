@@ -1,0 +1,29 @@
+.modal {
+    width: 15rem;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    outline: none;
+}
+
+.header,
+.text {
+    padding: 1em;
+}
+
+.header {
+    background: var(--red);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.125rem;
+}
+
+.header svg {
+    cursor: pointer;
+}
+
+.text {
+    background: #fff;
+}
