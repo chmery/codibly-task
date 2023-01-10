@@ -13,15 +13,7 @@ const SearchBar = ({ onSearch }: Props) => {
 
     const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const enteredId = event.target.value;
-
-        if (enteredId === "") {
-            setEnteredId(enteredId);
-            return;
-        }
-
-        if (isNumber(enteredId)) {
-            setEnteredId(enteredId);
-        }
+        if (isNumber(enteredId) || enteredId === "") setEnteredId(enteredId);
     };
 
     const searchHandler = () => onSearch(enteredId);
