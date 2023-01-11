@@ -14,6 +14,7 @@ import DataModal from "./components/UI/DataModal/DataModal";
 import ErrorModal from "./components/UI/ErrorModal/ErrorModal";
 import { openErrorModal } from "./store/modalSlice/modalSlice";
 import { useSearchParams, useLocation } from "react-router-dom";
+import { isNumber } from "./helpers/isNumber";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -36,18 +37,19 @@ const App = () => {
     const isErrorModalOpen = useSelector((state: RootState) => state.modal.errorModal.isOpen);
 
     useEffect(() => {
+        // Get and set data from the URL on initial render
         const query = location.search;
-        if (query === "?p=1") return; // First page
+        if (query === "?p=1") return;
 
         const currentPage = searchParams.get("p");
         const enteredId = searchParams.get("id");
 
-        if (enteredId) {
+        if (enteredId && isNumber(enteredId)) {
             setEnteredId(enteredId);
             return;
         }
 
-        if (currentPage) {
+        if (currentPage && isNumber(currentPage)) {
             dispatch(setPage(Number(currentPage)));
             return;
         }
