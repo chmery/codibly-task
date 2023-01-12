@@ -29,8 +29,6 @@ const App = () => {
     const isProductsDataAvailiable = productsData && productsData.data.length > 0 ? true : false;
     const isDataAvailiable = isProductsDataAvailiable || productData ? true : false;
 
-    let initialRender = true;
-
     useEffect(() => {
         const setInitialState = async () => {
             const pageParam = searchParams.get("p");
@@ -43,8 +41,8 @@ const App = () => {
                 }
                 const productData = await fetchProductData(idParam);
 
-                // Open error modal only if there was some rendered data before
-                if (productData instanceof Error && !initialRender) {
+                // Open error modal only if there was rendered data before
+                if (productData instanceof Error) {
                     dispatch(openErrorModal(productData.message));
                     return;
                 }
@@ -99,7 +97,6 @@ const App = () => {
             }
         };
         setInitialState();
-        initialRender = false;
     }, [searchParams]);
 
     return (

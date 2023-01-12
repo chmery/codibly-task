@@ -7,7 +7,7 @@ type Props = {
 
 const List = ({ productsData }: Props) => {
     return (
-        <div className={styles.list}>
+        <div className={styles.list} data-testid={"list"}>
             {productsData.map((productData) => (
                 <ListItem productData={productData} key={productData.id} />
             ))}
