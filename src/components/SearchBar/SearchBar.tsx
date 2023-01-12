@@ -34,7 +34,7 @@ const SearchBar = ({ onSearch }: Props) => {
                 value={enteredId}
             />
             <Button onClick={searchHandler}>
-                Search <IoSearch />
+                <IoSearch />
             </Button>
         </div>
     );

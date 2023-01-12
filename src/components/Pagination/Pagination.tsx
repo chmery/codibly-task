@@ -32,12 +32,17 @@ const Pagination = ({ totalPages }: Props) => {
         <div className={styles.pagination}>
             {canPrevBtnBeShown && (
                 <Button onClick={prevPageHandler}>
-                    <MdNavigateBefore /> Previous Page
+                    <MdNavigateBefore />
                 </Button>
             )}
+            <div className={styles["page-number"]}>
+                <span>
+                    {currentPage} / {totalPages}
+                </span>
+            </div>
             {canNextBtnBeShown && (
                 <Button onClick={nextPageHandler} nextBtn>
-                    Next Page <MdNavigateNext />
+                    <MdNavigateNext />
                 </Button>
             )}
         </div>

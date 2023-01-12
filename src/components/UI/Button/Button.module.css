@@ -2,7 +2,7 @@
     background: none;
     border: 1px solid var(--gray);
     color: var(--gray);
-    padding: 1em 2em;
+    padding: 1rem;
     cursor: pointer;
     outline: none;
     transition: color 0.1s, border 0.1s;
