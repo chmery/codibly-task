@@ -19,6 +19,12 @@ beforeEach(() => {
 });
 
 describe("App component", () => {
+    it("should render error modal", async () => {
+        fetchMock.mockResponseOnce(JSON.stringify({}), { status: 404 });
+        render(<MockApp path={`/?id=100`} />);
+        const errorModal = await screen.findByText("Error");
+        expect(errorModal).toBeVisible();
+    });
     it("should render filtered product", async () => {
         fetchMock.mockResponseOnce(
             JSON.stringify({
@@ -66,12 +72,5 @@ describe("App component", () => {
         render(<MockApp path={"/"} />);
         const product = await screen.findByText("fuchsia rose");
         expect(product).toBeVisible();
-    });
-
-    it("should render error modal", async () => {
-        fetchMock.mockResponseOnce(JSON.stringify({}), { status: 404 });
-        render(<MockApp path={`/?id=100`} />);
-        const errorModal = await screen.findByText("Error");
-        expect(errorModal).toBeVisible();
     });
 });

@@ -30,7 +30,7 @@ const App = () => {
     const isDataAvailiable = isProductsDataAvailiable || productData ? true : false;
 
     useEffect(() => {
-        const setInitialState = async () => {
+        const setData = async () => {
             const pageParam = searchParams.get("p");
             const idParam = searchParams.get("id");
 
@@ -39,17 +39,17 @@ const App = () => {
                     navigate("/");
                     return;
                 }
-                const productData = await fetchProductData(idParam);
+                const productDataRes = await fetchProductData(idParam);
 
                 // Open error modal only if there was rendered data before
-                if (productData instanceof Error) {
-                    dispatch(openErrorModal(productData.message));
+                if (productDataRes instanceof Error && (productData || productsData)) {
+                    dispatch(openErrorModal(productDataRes.message));
                     return;
                 }
 
-                if (!(productData instanceof Error) && productData) {
+                if (!(productDataRes instanceof Error) && productDataRes) {
                     setProductsData(null);
-                    setProductData(productData);
+                    setProductData(productDataRes);
                     return;
                 }
 
@@ -63,16 +63,16 @@ const App = () => {
                     return;
                 }
 
-                const productsData = await fetchProductsData(Number(pageParam));
+                const productsDataRes = await fetchProductsData(Number(pageParam));
 
-                if (productsData instanceof Error) {
-                    dispatch(openErrorModal(productsData.message));
+                if (productsDataRes instanceof Error) {
+                    dispatch(openErrorModal(productsDataRes.message));
                     return;
                 }
 
-                if (productsData && productsData.data.length) {
+                if (productsDataRes && productsDataRes.data.length) {
                     setProductData(null);
-                    setProductsData(productsData);
+                    setProductsData(productsDataRes);
                     return;
                 }
 
@@ -80,23 +80,23 @@ const App = () => {
                 return;
             }
 
-            // Initial render
+            // Default render
             if (!pageParam && !idParam) {
-                const productsData = await fetchProductsData(1);
+                const productsDataRes = await fetchProductsData(1);
 
-                if (productsData instanceof Error) {
-                    dispatch(openErrorModal(productsData.message));
+                if (productsDataRes instanceof Error) {
+                    dispatch(openErrorModal(productsDataRes.message));
                     return;
                 }
 
-                if (productsData && productsData.data.length) {
-                    setProductsData(productsData);
+                if (productsDataRes && productsDataRes.data.length) {
+                    setProductsData(productsDataRes);
                     setProductData(null);
                     return;
                 }
             }
         };
-        setInitialState();
+        setData();
     }, [searchParams]);
 
     return (
