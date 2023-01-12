@@ -14,7 +14,6 @@ import ErrorModal from "./components/UI/ErrorModal/ErrorModal";
 import { openErrorModal } from "./store/modalSlice/modalSlice";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { isNumber } from "./helpers/isNumber";
-import { setPage } from "./store/paginationSlice/paginationSlice";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -23,7 +22,6 @@ const App = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [productData, setProductData] = useState<ProductData | null>(null);
     const [productsData, setProductsData] = useState<ProductsData | null>(null);
-    const [enteredId, setEnteredId] = useState("");
 
     const isDataModalOpen = useSelector((state: RootState) => state.modal.dataModal.isOpen);
     const isErrorModalOpen = useSelector((state: RootState) => state.modal.errorModal.isOpen);
@@ -31,16 +29,7 @@ const App = () => {
     const isProductsDataAvailiable = productsData && productsData.data.length > 0 ? true : false;
     const isDataAvailiable = isProductsDataAvailiable || productData ? true : false;
 
-    const searchHandler = (enteredId: string) => {
-        setEnteredId(enteredId);
-        if (!enteredId) {
-            navigate("/");
-            dispatch(setPage(1));
-            setProductData(null);
-            return;
-        }
-        setSearchParams({ id: enteredId });
-    };
+    let initialRender = true;
 
     useEffect(() => {
         const setInitialState = async () => {
@@ -55,7 +44,7 @@ const App = () => {
                 const productData = await fetchProductData(idParam);
 
                 // Open error modal only if there was some rendered data before
-                if (productData instanceof Error && (productsData || enteredId)) {
+                if (productData instanceof Error && !initialRender) {
                     dispatch(openErrorModal(productData.message));
                     return;
                 }
@@ -104,10 +93,13 @@ const App = () => {
 
                 if (productsData && productsData.data.length) {
                     setProductsData(productsData);
+                    setProductData(null);
+                    return;
                 }
             }
         };
         setInitialState();
+        initialRender = false;
     }, [searchParams]);
 
     return (
@@ -116,7 +108,7 @@ const App = () => {
                 {!isDataAvailiable && <Loader />}
                 {isDataModalOpen && <DataModal />}
                 {isErrorModalOpen && <ErrorModal />}
-                {isDataAvailiable && <SearchBar onSearch={searchHandler} />}
+                {isDataAvailiable && <SearchBar />}
                 {isProductsDataAvailiable && <List productsData={productsData!.data} />}
                 {productData && <List productsData={[productData]} />}
                 {isProductsDataAvailiable && <Pagination totalPages={productsData!.totalPages} />}

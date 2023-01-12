@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { isNumber } from "../../helpers/isNumber";
 import Button from "../UI/Button/Button";
 import { IoSearch } from "react-icons/io5";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setPage } from "../../store/paginationSlice/paginationSlice";
 
-type Props = {
-    onSearch: (id: string) => void;
-};
+const SearchBar = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-const SearchBar = ({ onSearch }: Props) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [enteredId, setEnteredId] = useState("");
 
@@ -18,7 +19,15 @@ const SearchBar = ({ onSearch }: Props) => {
         if (isNumber(enteredId) || enteredId === "") setEnteredId(enteredId);
     };
 
-    const searchHandler = () => onSearch(enteredId);
+    const searchHandler = () => {
+        setEnteredId(enteredId);
+        if (!enteredId) {
+            navigate("/");
+            dispatch(setPage(1));
+            return;
+        }
+        setSearchParams({ id: enteredId });
+    };
 
     useEffect(() => {
         setEnteredId("");
@@ -33,7 +42,7 @@ const SearchBar = ({ onSearch }: Props) => {
                 onChange={inputChangeHandler}
                 value={enteredId}
             />
-            <Button onClick={searchHandler}>
+            <Button onClick={searchHandler} dataTestId={"search"}>
                 <IoSearch />
             </Button>
         </div>
