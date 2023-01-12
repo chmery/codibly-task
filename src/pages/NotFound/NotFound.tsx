@@ -14,10 +14,7 @@ const NotFound = () => {
             <div className={styles["not-found"]}>
                 <h1>Oops!</h1>
                 <p>It looks like the site you are looking for does not exist.</p>
-                <Button onClick={clickHandler}>
-                    Home
-                    <MdNavigateNext />
-                </Button>
+                <Button onClick={clickHandler}>Home</Button>
             </div>
         </Wrapper>
     );
