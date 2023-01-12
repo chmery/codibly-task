@@ -1,8 +1,7 @@
 import styles from "./Pagination.module.css";
 import Button from "../UI/Button/Button";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { nextPage, prevPage } from "../../store/paginationSlice/paginationSlice";
 import { useSearchParams } from "react-router-dom";
@@ -31,17 +30,17 @@ const Pagination = ({ totalPages }: Props) => {
     return (
         <div className={styles.pagination}>
             {canPrevBtnBeShown && (
-                <Button onClick={prevPageHandler}>
+                <Button onClick={prevPageHandler} dataTestId={"prev"}>
                     <MdNavigateBefore />
                 </Button>
             )}
             <div className={styles["page-number"]}>
-                <span>
+                <span data-testid={"page-number"}>
                     {currentPage} / {totalPages}
                 </span>
             </div>
             {canNextBtnBeShown && (
-                <Button onClick={nextPageHandler} nextBtn>
+                <Button onClick={nextPageHandler} nextBtn dataTestId={"next"}>
                     <MdNavigateNext />
                 </Button>
             )}
