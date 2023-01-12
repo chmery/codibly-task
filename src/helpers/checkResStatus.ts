@@ -1,5 +1,10 @@
 import { clientSideError, error404, serverSideError } from "../constants/errorMessages";
 
+/* export type ResponseError = {
+    status: number;
+    message: string;
+}; */
+
 export const checkResStatus = (res: Response) => {
     const { status } = res;
 

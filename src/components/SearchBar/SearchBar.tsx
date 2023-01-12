@@ -1,14 +1,16 @@
 import styles from "./SearchBar.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isNumber } from "../../helpers/isNumber";
 import Button from "../UI/Button/Button";
 import { IoSearch } from "react-icons/io5";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
     onSearch: (id: string) => void;
 };
 
 const SearchBar = ({ onSearch }: Props) => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [enteredId, setEnteredId] = useState("");
 
     const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +19,10 @@ const SearchBar = ({ onSearch }: Props) => {
     };
 
     const searchHandler = () => onSearch(enteredId);
+
+    useEffect(() => {
+        setEnteredId("");
+    }, [searchParams]);
 
     return (
         <div className={styles["search-bar"]}>
