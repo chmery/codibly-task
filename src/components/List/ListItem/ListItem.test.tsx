@@ -3,17 +3,17 @@ import ListItem from "./ListItem";
 import { Provider } from "react-redux";
 import store from "../../../store/store";
 
-const productData = {
-    id: 1,
-    name: "cerulean",
-    year: 2000,
-    color: "#98B2D1",
-    pantoneValue: "15-4020",
-};
-
-const { id, name, year } = productData;
-
 describe("List item component", () => {
+    const productData = {
+        id: 1,
+        name: "cerulean",
+        year: 2000,
+        color: "#98B2D1",
+        pantoneValue: "15-4020",
+    };
+
+    const { id, name, year } = productData;
+
     it("should render the product data", () => {
         render(
             <Provider store={store}>
