@@ -14,12 +14,16 @@ describe("List item component", () => {
 
     const { id, name, year } = productData;
 
-    it("should render the product data", () => {
-        render(
+    const MockListItem = () => {
+        return (
             <Provider store={store}>
                 <ListItem productData={productData} />
             </Provider>
         );
+    };
+
+    it("should render the product data", () => {
+        render(<MockListItem />);
 
         const productId = screen.getByText(id);
         const productName = screen.getByText(name);
@@ -29,14 +33,9 @@ describe("List item component", () => {
     });
 
     it("should pass product data to modal when clicked on", () => {
-        render(
-            <Provider store={store}>
-                <ListItem productData={productData} />
-            </Provider>
-        );
+        render(<MockListItem />);
 
         fireEvent.click(screen.getByText(name));
-
         const { modal } = store.getState();
 
         expect(modal.dataModal.productData?.name).toBe(name);
