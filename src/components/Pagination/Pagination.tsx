@@ -1,28 +1,18 @@
 import styles from "./Pagination.module.css";
 import Button from "../UI/Button/Button";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { nextPage, prevPage } from "../../store/paginationSlice/paginationSlice";
 import { useSearchParams } from "react-router-dom";
 
 type Props = {
     totalPages: number;
+    currentPage: number;
 };
 
-const Pagination = ({ totalPages }: Props) => {
-    const dispatch = useDispatch();
+const Pagination = ({ totalPages, currentPage }: Props) => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const currentPage = useSelector((state: RootState) => state.pagination.currentPage);
 
-    const prevPageHandler = () => {
-        dispatch(prevPage());
-        setSearchParams({ p: (currentPage - 1).toString() });
-    };
-    const nextPageHandler = () => {
-        dispatch(nextPage());
-        setSearchParams({ p: (currentPage + 1).toString() });
-    };
+    const prevPageHandler = () => setSearchParams({ p: (currentPage - 1).toString() });
+    const nextPageHandler = () => setSearchParams({ p: (currentPage + 1).toString() });
 
     const canNextBtnBeShown = currentPage >= 1 && currentPage < totalPages;
     const canPrevBtnBeShown = currentPage >= 2 && currentPage <= totalPages;

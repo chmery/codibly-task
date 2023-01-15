@@ -1,16 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { createStore } from "../../store/store";
 import SearchBar from "./SearchBar";
 
 describe("Search bar component", () => {
     const MockSearchBar = () => {
         return (
             <BrowserRouter>
-                <Provider store={createStore()}>
-                    <SearchBar />
-                </Provider>
+                <SearchBar />
             </BrowserRouter>
         );
     };

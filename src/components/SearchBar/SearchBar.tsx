@@ -4,12 +4,9 @@ import { isNumber } from "../../helpers/isNumber";
 import Button from "../UI/Button/Button";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setPage } from "../../store/paginationSlice/paginationSlice";
 
 const SearchBar = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [enteredId, setEnteredId] = useState("");
@@ -23,7 +20,6 @@ const SearchBar = () => {
         setEnteredId(enteredId);
         if (!enteredId) {
             navigate("/");
-            dispatch(setPage(1));
             return;
         }
         setSearchParams({ id: enteredId });

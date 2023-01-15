@@ -108,7 +108,12 @@ const App = () => {
                 {isDataAvailiable && <SearchBar />}
                 {isProductsDataAvailiable && <List productsData={productsData!.data} />}
                 {productData && <List productsData={[productData]} />}
-                {isProductsDataAvailiable && <Pagination totalPages={productsData!.totalPages} />}
+                {isProductsDataAvailiable && (
+                    <Pagination
+                        totalPages={productsData!.totalPages}
+                        currentPage={productsData!.page}
+                    />
+                )}
             </div>
         </Wrapper>
     );
